@@ -1,12 +1,13 @@
 /*
  * CS2050 - Computer Science II - Fall 2022
  * Instructor: Thyago Mota
- * Description: Activity 06 - Node
+ * Student(s) Name(s):
+ * Description: prg_01 - Node
  */
 
 public class Node<E> {
 
-    private E       value;
+    private E  value;
     private Node<E> next;
 
     public Node(E value) {
@@ -18,7 +19,7 @@ public class Node<E> {
         return value;
     }
 
-    public void setValue(E value) {
+    public void setValue(final E value) {
         this.value = value;
     }
 
@@ -26,7 +27,7 @@ public class Node<E> {
         return next;
     }
 
-    public void setNext(Node<E> next) {
+    public void setNext(final Node<E> next) {
         this.next = next;
     }
 

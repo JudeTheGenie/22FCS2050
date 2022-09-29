@@ -1,14 +1,46 @@
 /*
  * CS2050 - Computer Science II - Fall 2022
  * Instructor: Thyago Mota
- * Description: Activity 06 - LinkedList
+ * Description: Homework 05 - PostfixEvaluation
  */
 
 import java.util.Iterator;
 
-public class LinkedList<E> implements Iterable<E> {
+class Node<E> {
 
-    private Node<E> head;
+    private E       value;
+    private Node<E> next;
+
+    public Node(E value) {
+        this.value = value;
+        next = null;
+    }
+
+    public E getValue() {
+        return value;
+    }
+
+    public void setValue(E value) {
+        this.value = value;
+    }
+
+    public Node<E> getNext() {
+        return next;
+    }
+
+    public void setNext(Node<E> next) {
+        this.next = next;
+    }
+
+    @Override
+    public String toString() {
+        return value + "";
+    }
+}
+
+class LinkedList<E> implements Iterable<E> {
+
+    protected Node<E> head;
 
     public LinkedList() {
         head = null;
@@ -41,7 +73,7 @@ public class LinkedList<E> implements Iterable<E> {
         }
     }
 
-    // TODO: returns the # of elements
+    // TODOd: returns the # of elements
     public int size() {
         Node<E> current = head;
         int size = 0;
@@ -105,7 +137,7 @@ public class LinkedList<E> implements Iterable<E> {
         }
     }
 
-    // TODO: removes the element at the given index location
+    // TODOd: removes the element at the given index location
     // throw an exception if index is invalid
     public void remove(int index) {
         // check if index is valid 1st
@@ -148,5 +180,102 @@ public class LinkedList<E> implements Iterable<E> {
                 return null;
             }
         };
+    }
+}
+
+class Stack<E> extends LinkedList<E> {
+
+    public void push(E value) {
+        add(value);
+    }
+
+    public E pop() throws Exception {
+        if (isEmpty())
+            throw new Exception("Stack is empty!");
+        Node<E> toBeReturned = head;
+        head = head.getNext();
+        toBeReturned.setNext(null);
+        return toBeReturned.getValue();
+    }
+
+}
+
+class PostfixEvaluation {
+
+    static final int INVALID_OP = 0;
+    static final int ADD_OP     = 1;
+    static final int SUB_OP     = 2;
+    static final int MUL_OP     = 3;
+    static final int DIV_OP     = 4;
+
+    // returns true/false depending whether the given symbol is an operand
+    public static boolean isOperand(String symbol) {
+        try {
+            Integer.parseInt(symbol);
+            return true;
+        }
+        catch (NumberFormatException ex) {
+            return false;
+        }
+    }
+
+    // returns the operand associated with the given symbol; 0 if symbol is not a valid operand
+    public static int getOperand(String symbol) {
+        if (isOperand(symbol))
+            return Integer.parseInt(symbol);
+        return 0;
+    }
+
+    // returns true/false depending whether the given symbol is an operator
+    public static boolean isOperator(String symbol) {
+        if (symbol.length() > 1)
+            return false;
+        char c = symbol.charAt(0);
+        return c == '+' || c == '-' || c == '*' || c == '/';
+    }
+
+    // returns the operator code associated with the given symbol; INVALID_OP if symbol is not a valid operator
+    public static int getOperator(String symbol) {
+        if (!isOperator(symbol))
+            return INVALID_OP;
+        char c = symbol.charAt(0);
+        if (c == '+')
+            return ADD_OP;
+        else if (c == '-')
+            return SUB_OP;
+        else if (c == '*')
+            return MUL_OP;
+        else
+            return DIV_OP;
+    }
+
+    // TODO: finish the method's implementation
+    public static int postfixEval(String exp) throws Exception {
+        Stack<Integer> stack = new Stack<>();
+        String symbols[] = exp.split(" ");
+        for (int i = 0; i < symbols.length; i++) {
+            String symbol = symbols[i];
+            if (isOperator(symbol)) {
+                // TODO: finish this part of the code...
+
+            }
+            else if (isOperand(symbol)) {
+                // TODO: finish this part of the code...
+            }
+            else {
+                System.out.println("Invalid symbol \"" + symbol + "\" found!");
+                System.exit(1);
+            }
+        }
+        if (stack.size() != 1) {
+            System.out.println("Couldn't evaluate expression!");
+            System.exit(1);
+        }
+        return stack.pop();
+    }
+
+    public static void main(String[] args) throws Exception {
+        String exp = "4 3 + 5 2 - *";
+        System.out.println("Result: " + postfixEval(exp));
     }
 }

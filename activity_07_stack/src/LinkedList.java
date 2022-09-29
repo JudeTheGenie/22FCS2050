@@ -1,14 +1,14 @@
 /*
  * CS2050 - Computer Science II - Fall 2022
  * Instructor: Thyago Mota
- * Description: Activity 06 - LinkedList
+ * Description: Activity 07 - Node
  */
 
 import java.util.Iterator;
 
 public class LinkedList<E> implements Iterable<E> {
 
-    private Node<E> head;
+    protected Node<E> head;
 
     public LinkedList() {
         head = null;

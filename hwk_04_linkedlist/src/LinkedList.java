@@ -1,14 +1,44 @@
 /*
  * CS2050 - Computer Science II - Fall 2022
  * Instructor: Thyago Mota
- * Description: Activity 06 - LinkedList
+ * Description: Homework 04 - LinkedList
  */
 
-import java.util.Iterator;
+class Node {
 
-public class LinkedList<E> implements Iterable<E> {
+    private int  value;
+    private Node next;
 
-    private Node<E> head;
+    public Node(int value) {
+        this.value = value;
+        next = null;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public Node getNext() {
+        return next;
+    }
+
+    public void setNext(Node next) {
+        this.next = next;
+    }
+
+    @Override
+    public String toString() {
+        return value + "";
+    }
+}
+
+class LinkedList {
+
+    private Node head;
 
     public LinkedList() {
         head = null;
@@ -19,20 +49,21 @@ public class LinkedList<E> implements Iterable<E> {
         return head == null;
     }
 
+
     // TODOd: add a new element (with the value) in front of the list!
-    public void add(E value) {
-        Node<E> newNode = new Node<>(value);
+    public void add(int value) {
+        Node newNode = new Node(value);
         newNode.setNext(head);
         head = newNode;
     }
 
     // TODOd: add a new element (with the value) at the end of the list!
-    public void append(E value) {
-        Node<E> newNode = new Node<>(value);
+    public void append(int value) {
+        Node newNode = new Node(value);
         if (isEmpty())
             head = newNode;
         else {
-            Node<E> current = head;
+            Node current = head;
             while (current.getNext() != null)
                 current = current.getNext();
             // at this point, what can we tell about current?
@@ -41,9 +72,9 @@ public class LinkedList<E> implements Iterable<E> {
         }
     }
 
-    // TODO: returns the # of elements
+    // TODOd: returns the # of elements
     public int size() {
-        Node<E> current = head;
+        Node current = head;
         int size = 0;
         while (current != null) {
             size++;
@@ -55,7 +86,7 @@ public class LinkedList<E> implements Iterable<E> {
     // TODOd: return a string representation of the object
     @Override
     public String toString() {
-        Node<E> current = head;
+        Node current = head;
         String s = "";
         while (current != null) {
             s += current + " ";
@@ -65,22 +96,22 @@ public class LinkedList<E> implements Iterable<E> {
     }
 
     // TODOd: return the element at index location
-    public E get(int index) {
+    public int get(int index) {
         // check if index is valid 1st
         if (index < 0 || index >= size())
             throw new ArrayIndexOutOfBoundsException();
-        Node<E> current = head;
+        Node current = head;
         for (int i = 0; i < index; i++)
             current = current.getNext();
         return current.getValue();
     }
 
     // TODOd: sets value to location at index
-    public void set(int index, E value) {
+    public void set(int index, int value) {
         // check if index is valid 1st
         if (index < 0 || index >= size())
             throw new ArrayIndexOutOfBoundsException();
-        Node<E> current = head;
+        Node current = head;
         for (int i = 0; i < index; i++)
             current = current.getNext();
         current.setValue(value);
@@ -88,7 +119,7 @@ public class LinkedList<E> implements Iterable<E> {
 
     // TODOd: inserts value at the given index location
     // throw an exception if index is invalid
-    public void insert(int index, E value) {
+    public void insert(int index, int value) {
         // check if index is valid 1st
         if (index < 0 || index >= size())
             throw new ArrayIndexOutOfBoundsException();
@@ -96,16 +127,16 @@ public class LinkedList<E> implements Iterable<E> {
         if (index == 0)
             add(value);
         else {
-            Node<E> current = head;
+            Node current = head;
             for (int i = 0; i < index - 1; i++)
                 current = current.getNext();
-            Node<E> newNode = new Node<>(value);
+            Node newNode = new Node(value);
             newNode.setNext(current.getNext());
             current.setNext(newNode);
         }
     }
 
-    // TODO: removes the element at the given index location
+    // TODOd: removes the element at the given index location
     // throw an exception if index is invalid
     public void remove(int index) {
         // check if index is valid 1st
@@ -113,40 +144,30 @@ public class LinkedList<E> implements Iterable<E> {
             throw new ArrayIndexOutOfBoundsException();
         // special case: index is zero
         if (index == 0) {
-            Node<E> toBeRemoved = head;
+            Node toBeRemoved = head;
             head = head.getNext();
             toBeRemoved.setNext(null);
         }
         else {
-            Node<E> current = head;
+            Node current = head;
             for (int i = 0; i < index - 1; i++)
                 current = current.getNext();
-            Node<E> toBeRemoved = current.getNext();
+            Node toBeRemoved = current.getNext();
             current.setNext(toBeRemoved.getNext());
             toBeRemoved.setNext(null);
         }
     }
 
-    @Override
-    public Iterator<E> iterator() {
-        return new Iterator<E>() {
+    // TODO: remove all elements of the linked list, making sure no node's next references are left
+    public void clear() {
+        
+    }
 
-            private Node<E> current = head;
-
-            @Override
-            public boolean hasNext() {
-                return current != null;
-            }
-
-            @Override
-            public E next() {
-                if (hasNext()) {
-                    E value = current.getValue();
-                    current = current.getNext();
-                    return value;
-                }
-                return null;
-            }
-        };
+    public static void main(String[] args) {
+        LinkedList lst = new LinkedList();
+        lst.append(1); lst.append(2); lst.append(3);
+        System.out.println("Before clear: " + lst);
+        lst.clear();
+        System.out.println("After clear: " + lst);
     }
 }
