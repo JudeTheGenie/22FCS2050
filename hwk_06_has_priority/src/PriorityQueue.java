@@ -9,7 +9,7 @@ public class PriorityQueue<E extends HasPriority> extends LinkedList<E> {
 
     // TODO: finish the implementation of the method
     public void push(E value) {
-
+        node node = new node(customer);
         // create a new node with value
 
         // add the new node as the front node if queue is empty
