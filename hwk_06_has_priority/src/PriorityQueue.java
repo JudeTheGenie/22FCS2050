@@ -7,21 +7,43 @@
 
 public class PriorityQueue<E extends HasPriority> extends LinkedList<E> {
 
-    // TODO: finish the implementation of the method
+    // TODOd: finish the implementation of the method
     public void push(E value) {
-        node node = new node(customer);
-        // create a new node with value
 
-        // add the new node as the front node if queue is empty
+        // create a new Node with customer
+        Node node = new Node(value);
 
+        // add the new Node as the front Node if queue is empty
+        if(head == null) {
+            head = node;
+        } else {
+            // if the queue is not empty
 
-        // if the queue is not empty
+            // if customer has a higher priority than the front customer, add the new Node as the front Node
+            if(value.getPriority() > head.getValue().getPriority()) {
+                node.setNext(head);
+                head = node;
+            } else {
+                // if that is not the case, use the previous/current strategy (see Polynomial's addTerm) to add the new Node in the
+                // correct location of the queue
+                Node current = head;
+                Node previous = head;
+                while (current != null) {
+                    if(node.getValue().getPriority() > current.getValue().getPriority() ) {
+                        previous.setNext(node);
+                        node.setNext(current);
+                        break;
+                    }
+                    previous = current;
+                    current = current.getNext();
+                }
 
-
-            // if that is not the case, add the new node in the correct location of the queue
-
-                // if you haven't returned at this point, add the new node at the rear of the queue
-
+                // if you haven't returned at this point, add the new Node at the rear of the queue
+                if(current == null) {
+                    previous.setNext(node);
+                }
+            }
+        }
 
     }
 
